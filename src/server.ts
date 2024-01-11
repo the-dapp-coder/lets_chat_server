@@ -9,14 +9,17 @@ const wss = new WebSocket.Server({ server });
 
 wss.on('connection', (ws) => {
     ws.on('message', (message: string)=>{
+        console.log(`Message 01: ${message}`);
         wss.clients.forEach((client)=>{
-            if(client !== ws && client.readyState === WebSocket.OPEN){
+            if( client.readyState === WebSocket.OPEN){
+                console.log(`Message 02: ${message}`);
                 client.send(message);
+                
             }
         });
     });
 });
 
-server.listen(3000, ()=>{
+server.listen(3000,'0.0.0.0', ()=>{
     console.log("server is running on 3000");
 });
